@@ -33,21 +33,26 @@ class NewWordActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_word)
-        val editWordView = findViewById<EditText>(R.id.edit_word)
+        val editidView = findViewById<EditText>(R.id.edit_id)
+
 
         val button = findViewById<Button>(R.id.button_save)
         button.setOnClickListener {
             val replyIntent = Intent()
-            if (TextUtils.isEmpty(editWordView.text)) {
+            var word2 = Word(1,"12345",
+            "123456,12345","12345",
+            "1234","1234","12345","12345","12345","12345",)
+          /*  if (TextUtils.isEmpty(editidView.text)) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
-            } else {
-                val word = editWordView.text.toString()
-                replyIntent.putExtra(EXTRA_REPLY, word)
+            } else {*/
+                val word = editidView.text.toString()
+              //  replyIntent.putExtra(EXTRA_REPLY, word)
+                replyIntent.putExtra("myword",word2)
                 setResult(Activity.RESULT_OK, replyIntent)
-            }
             finish()
         }
-    }
+        }
+
 
     companion object {
         const val EXTRA_REPLY = "com.example.android.wordlistsql.REPLY"

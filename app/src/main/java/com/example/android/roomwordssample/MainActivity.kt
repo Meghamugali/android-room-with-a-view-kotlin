@@ -30,11 +30,11 @@ class MainActivity : AppCompatActivity() {
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
-            val intent = Intent(this@MainActivity, NewWordActivity::class.java)
+            val intent = Intent(this, NewWordActivity::class.java)
             startActivityForResult(intent, newWordActivityRequestCode)
         }
 
-        
+
         // Add an observer on the LiveData returned by getAlphabetizedWords.
         // The onChanged() method fires when the observed data changes and the activity is
         // in the foreground.
@@ -47,17 +47,22 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
 
-        if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            intentData?.getStringExtra(NewWordActivity.EXTRA_REPLY)?.let { reply ->
-                val word = Word(reply)
-                wordViewModel.insert(word)
+       // if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
+           /* intentData?.getStringExtra(NewWordActivity.EXTRA_REPLY)?.let { reply ->
+                val word = Word(reply)*/
+            var word2: Word? = intentData?.getParcelableExtra("myword")
+            if (word2 != null) {
+                wordViewModel.insert(word2)
             }
-        } else {
+
+        else {
             Toast.makeText(
                 applicationContext,
                 R.string.empty_not_saved,
                 Toast.LENGTH_LONG
             ).show()
         }
-    }
+        }
+
+
 }

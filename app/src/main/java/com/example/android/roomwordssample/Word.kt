@@ -16,6 +16,8 @@
 
 package com.example.android.roomwordssample
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -31,5 +33,59 @@ import androidx.room.PrimaryKey
  * https://developer.android.com/topic/libraries/architecture/room.html
  */
 
-@Entity(tableName = "word_table")
-data class Word(@PrimaryKey @ColumnInfo(name = "word") val word: String)
+@Entity(tableName = "SensorData")
+data class Word(@PrimaryKey(autoGenerate = true)
+                var id:Int,
+                var gyroscope: String,
+                var latlng: String,
+                var bearing: String,
+                var accuracy: String,
+                var speed: String,
+                var accelerometer: String,
+                var timeStamp:String,
+                var magnetometer:String,
+                var isManual:String        ): Parcelable {
+
+
+    constructor(parcel: Parcel) : this(
+        id = parcel.readInt(),
+       gyroscope = parcel.readString().toString(),
+       latlng = parcel.readString().toString(),
+       bearing = parcel.readString().toString(),
+       accuracy = parcel.readString().toString(),
+        speed = parcel.readString().toString(),
+       accelerometer =  parcel.readString().toString(),
+       timeStamp = parcel.readString().toString(),
+        magnetometer = parcel.readString().toString(),
+       isManual = parcel.readString().toString()
+    ) {
+
+    }
+
+    override fun describeContents()=0
+
+    override fun writeToParcel(parcel: Parcel?, flags: Int) {
+        parcel?.writeInt(id)
+        parcel?.writeString(gyroscope)
+        parcel?.writeString(latlng)
+        parcel?.writeString(bearing)
+        parcel?.writeString(accuracy)
+        parcel?.writeString(speed)
+        parcel?.writeString(accelerometer)
+        parcel?.writeString(timeStamp)
+        parcel?.writeString(magnetometer)
+        parcel?.writeString(isManual)
+
+
+    }
+
+    companion object CREATOR : Parcelable.Creator<Word> {
+        override fun createFromParcel(parcel: Parcel): Word {
+            return Word(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Word?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
